@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: proxy-router-config
+  labels:
+    app: proxy-router
+data:
+  models-config.json: |
+    {{ .Values.proxyRouter.configMap.modelsconfig | indent 4 }}

@@ -1,0 +1,39 @@
+# Internal ClusterIP Service for ports 8080 and 8082
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-router-internal
+  labels:
+    app: proxy-router
+spec:
+  selector:
+    app: proxy-router
+  ports:
+    - name: http-8080
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+  type: ClusterIP  # Internal only
+
+---
+  # External LoadBalancer Service for port 3333 only
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-router-external
+  labels:
+    app: proxy-router
+spec:
+  selector:
+    app: proxy-router
+  ports:
+    - name: http-3333
+      protocol: TCP
+      port: 3333
+      targetPort: 3333
+    - name: http-8082
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+  type: LoadBalancer  # Exposes port 3333 externally

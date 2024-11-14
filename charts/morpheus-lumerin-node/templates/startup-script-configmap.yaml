@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: startup-script-configmap
+data:
+  docker-compose-startup.sh: |
+    #!/bin/sh
+    ollama serve &
+    sleep 10
+    ollama pull llama2
+    ollama run llama2
+    tail -f /dev/null

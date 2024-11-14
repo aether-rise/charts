@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama
+  labels:
+    app: ollama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      initContainers:
+        - name: set-startup-script-permissions
+          image: busybox
+          command: ["sh", "-c", "cp /config/docker-compose-startup.sh /writable/ && chmod +x /writable/docker-compose-startup.sh"]
+          volumeMounts:
+            - name: startup-script
+              mountPath: /config  # Mount ConfigMap as read-only
+            - name: writable-startup-script
+              mountPath: /writable  # Mount a writable emptyDir volume
+      containers:
+        - name: ollama
+          image: {{ .Values.ollama.image.repository }}:{{ .Values.ollama.image.tag }}
+          imagePullPolicy: {{ .Values.ollama.image.pullPolicy }}
+          ports:
+            {{- range .Values.ollama.ports }}
+            - containerPort: {{ . }}
+            {{- end }}
+          env:
+            - name: OLLAMA_NUM_PARALLEL
+              value: {{ .Values.ollama.env.OLLAMA_NUM_PARALLEL | quote }}
+          command: ["/writable/docker-compose-startup.sh"]  # Execute from writable location
+          volumeMounts:
+            - name: ollamaconfig
+              mountPath: /root/.ollama
+            - name: writable-startup-script
+              mountPath: /writable  # Use the writable location for the script
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.ollama.readinessProbe.path }}
+              port: {{ .Values.ollama.readinessProbe.port }}
+            initialDelaySeconds: {{ .Values.ollama.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.ollama.readinessProbe.periodSeconds }}
+          resources:
+            limits:
+              nvidia.com/gpu: 1  # Request 1 GPU
+            requests:
+              nvidia.com/gpu: 1  # Minimum 1 GPU required
+      volumes:
+        - name: ollamaconfig
+          emptyDir: {}
+        - name: startup-script
+          configMap:
+            name: startup-script-configmap
+        - name: writable-startup-script
+          emptyDir: {}  # Writable emptyDir for the copied script

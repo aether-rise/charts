@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-router
+  labels:
+    app: proxy-router
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: proxy-router
+  template:
+    metadata:
+      labels:
+        app: proxy-router
+    spec:
+      initContainers:
+        - name: wait-for-ollama
+          image: busybox
+          command: ['sh', '-c', 'until nc -z ollama {{ .Values.ollama.ports | first }}; do echo waiting for ollama; sleep 5; done']
+      containers:
+        - name: proxy-router
+          image: {{ .Values.proxyRouter.image.repository }}:{{ .Values.proxyRouter.image.tag }}
+          imagePullPolicy: {{ .Values.proxyRouter.image.pullPolicy }}
+          ports:
+            {{- range .Values.proxyRouter.ports }}
+            - name: "port-{{ . }}"     # Adding unique names for each port
+              containerPort: {{ . }}
+            {{- end }}
+          env:
+            {{- range $key, $value := .Values.proxyRouter.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: proxy-logs
+              mountPath: /app/logs
+            - name: go-pkg-mod
+              mountPath: /go/pkg/mod
+            - name: models-config
+              mountPath: /app/models-config.json
+              subPath: models-config.json
+      volumes:
+        - name: proxy-logs
+          emptyDir: {}
+        - name: go-pkg-mod
+          hostPath:
+            path: /home/username/go/pkg/mod  # Adjust path as needed
+        - name: models-config
+          configMap:
+            name: proxy-router-config
