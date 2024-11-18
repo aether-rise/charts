@@ -17,7 +17,7 @@ helm repo update
 Once the repository is added, you can install a specific chart. Replace `<chart-name>` with the name of the chart you wish to install:
 
 ```bash
-helm install mlc morpheus-lumerin/morpheus-lumerin-compute --namespace mlc --create-namespace
+helm install mlc morpheus-lumerin/morpheus-lumerin-node --namespace mlc --create-namespace
 ```
 
 ## Available Configuration Values
