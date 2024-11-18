@@ -25,7 +25,7 @@ helm install mlc morpheus-lumerin/morpheus-lumerin-node --namespace mlc --create
 Below are the main configurable values for this chart. You can set them inline with `--set` or in a `values.yaml` file.
 
 ### Proxy Router Configuration
-- `proxyRouter.image.repository`: Docker image repository for the proxy router (default: `bsord/mln`).
+- `proxyRouter.image.repository`: Docker image repository for the proxy router (default: `ghcr.io/aether-rise/proxy`).
 - `proxyRouter.image.tag`: Image tag (default: `latest`).
 - `proxyRouter.image.pullPolicy`: Image pull policy (default: `IfNotPresent`).
 
@@ -84,8 +84,8 @@ replicaCount: 1
 
 proxyRouter:
   image:
-    repository: bsord/mln
-    tag: "latest"
+    repository: ghcr.io/aether-rise/proxy
+    tag: "test-latest"
     pullPolicy: IfNotPresent
   env:
     WALLET_PRIVATE_KEY: "YOUR_PRIVATE_KEY"
