@@ -3,7 +3,7 @@ replicaCount: 1
 proxyRouter:
   image:
     repository: bsord/mln
-    tag: "latest"
+    tag: "test-latest"
     pullPolicy: IfNotPresent
   env:
     WALLET_PRIVATE_KEY: "YOUR_PRIVATE_KEY" # Private Key from your Wallet as Consumer or Provider (needed for the proxy-router to sign transactions)
