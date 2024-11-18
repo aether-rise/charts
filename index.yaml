@@ -3,6 +3,15 @@ entries:
   morpheus-lumerin-node:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2024-11-18T03:22:50.512202318Z"
+    description: A Helm chart for deploying morpheus-lumerin-node to Kubernetes
+    digest: 1ea5819f26392af9aac0fdfc0d4cad89a58612e0b213c0bd1ddf8fa987fa8c08
+    name: morpheus-lumerin-node
+    urls:
+    - https://github.com/aether-rise/charts/releases/download/morpheus-lumerin-node-1.0.3/morpheus-lumerin-node-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2024-11-14T04:50:42.401999749Z"
     description: A Helm chart for deploying morpheus-lumerin-node to Kubernetes
     digest: e2484e45390a2593ea0a6ac0d608abdc794137686356c70f70e91fa7992bb471
@@ -10,4 +19,4 @@ entries:
     urls:
     - https://github.com/aether-rise/charts/releases/download/morpheus-lumerin-node-1.0.2/morpheus-lumerin-node-1.0.2.tgz
     version: 1.0.2
-generated: "2024-11-14T04:50:42.40201094Z"
+generated: "2024-11-18T03:22:50.512211185Z"
