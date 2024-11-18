@@ -2,7 +2,7 @@ replicaCount: 1
 
 proxyRouter:
   image:
-    repository: bsord/mln
+    repository: ghcr.io/aether-rise/proxy
     tag: "test-latest"
     pullPolicy: IfNotPresent
   env:
