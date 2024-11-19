@@ -13,6 +13,10 @@ spec:
       protocol: TCP
       port: 8080
       targetPort: 8080
+    - name: http-8082
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
 
   type: ClusterIP  # Internal only
 
@@ -32,8 +36,5 @@ spec:
       protocol: TCP
       port: 3333
       targetPort: 3333
-    - name: http-8082
-      protocol: TCP
-      port: 8082
-      targetPort: 8082
+    
   type: LoadBalancer  # Exposes port 3333 externally
