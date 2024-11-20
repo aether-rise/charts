@@ -50,9 +50,9 @@ proxyRouter:
   service:
     type: LoadBalancer  # Set to LoadBalancer for external access, or ClusterIP for internal
   configMap:
-    modelsconfig: |
+    modelsconfig:
       {
-        "0x6a4813e866a48da528c533e706344ea853a1d3f21e37b4c8e7ffd5ff25772024": {
+        "0x8cdb614020cb445ee275c1f993dd3da95d9e9dffbacd2a36ac27d91f270b5f89": {
           "modelName": "llama2",
           "apiType": "openai",
           "concurrentSlots": 10,

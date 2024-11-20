@@ -6,4 +6,4 @@ metadata:
     app: proxy-router
 data:
   models-config.json: |
-    {{ .Values.proxyRouter.configMap.modelsconfig | toJson }}
+    {{ .Values.proxyRouter.configMap.modelsconfig | toJson | quote  }}
