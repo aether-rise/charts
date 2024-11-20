@@ -50,7 +50,16 @@ proxyRouter:
   service:
     type: LoadBalancer  # Set to LoadBalancer for external access, or ClusterIP for internal
   configMap:
-    modelsconfig: "{ \"0x6a4813e866a48da528c533e706344ea853a1d3f21e37b4c8e7ffd5ff25772024\": { \"modelName\": \"llama2\", \"apiType\": \"openai\", \"concurrentSlots\": 10, \"capacityPolicy\": \"idle_timeout\", \"apiUrl\": \"http://ollama:11434/v1\" } }"
+    modelsconfig: |
+      {
+        "0x6a4813e866a48da528c533e706344ea853a1d3f21e37b4c8e7ffd5ff25772024": {
+          "modelName": "llama2",
+          "apiType": "openai",
+          "concurrentSlots": 10,
+          "capacityPolicy": "idle_timeout",
+          "apiUrl": "http://ollama:11434/v1"
+        }
+      }
 
 
 ollama:
